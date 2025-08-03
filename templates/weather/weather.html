@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 80px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4facfe;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #00c6ff;
+        }
+
+        .weather-result {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .weather-result h3 {
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .weather-result p {
+            font-size: 18px;
+            margin: 4px 0;
+        }
+
+        .weather-icon {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🌦️ Weather App</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.city }}
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if weather %}
+        <div class="weather-result">
+            <h3>Weather in {{ weather.city }}</h3>
+            <p>🌡 Temperature: {{ weather.temperature }}°C</p>
+            <p>🌤 Condition: {{ weather.description|capfirst }}</p>
+            <div class="weather-icon">
+                <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Weather icon">
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
